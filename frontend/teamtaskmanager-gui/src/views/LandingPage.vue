@@ -30,12 +30,16 @@
 </div>
 
     </div>
+
+    <UserForm></UserForm>
   </template>
   
   <script setup>
+  
   import { ref } from 'vue'
   import axios from 'axios'
-  
+  import UserForm from '../components/UserForm.vue'
+
   const response = ref(null)
   const error = ref(null)
   

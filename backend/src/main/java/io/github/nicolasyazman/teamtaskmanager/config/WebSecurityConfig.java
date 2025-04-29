@@ -2,6 +2,7 @@ package io.github.nicolasyazman.teamtaskmanager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +24,8 @@ public class WebSecurityConfig {
             .cors(cors -> {})
             .sessionManagement(session -> session.sessionCreationPolicy(STATELESS)) // No session (pure REST)
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("user").hasRole("ADMIN") // Allow anyone to call /user
+            	.requestMatchers(HttpMethod.POST, "/user").permitAll() // Allows to create users (POST)
+            	.requestMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN") // But not to list created users
                 .requestMatchers("user/{id}").hasRole("ADMIN")
                 .requestMatchers("auth/login").permitAll() 
                 .anyRequest().authenticated()               // Other endpoints need authentication
