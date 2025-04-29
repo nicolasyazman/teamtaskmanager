@@ -21,9 +21,7 @@
         </button>
       </form>
   
-      <!-- Success Message -->
       <p v-if="successMessage" class="mt-4 text-green-600">{{ successMessage }}</p>
-      <!-- Error Message -->
       <p v-else class="mt-4 text-red-600">{{ errorMessage }}</p>
     </div>
   </template>
@@ -31,12 +29,14 @@
   <script setup>
   import { ref } from 'vue'
   import axios from 'axios'
-  
+  import { useRouter } from 'vue-router'
+
   const email = ref('')
   const password = ref('')
   const successMessage = ref('')
   const errorMessage = ref('')
-  
+  const router = useRouter() // To programmatically navigate after login
+
   const login = async () => {
     // Clear previous messages
     successMessage.value = ''
@@ -53,6 +53,12 @@
       if (response.status === 200) {
         successMessage.value = 'Login successful! You are now logged in.'
         
+        // Save the JWT token in localStorage
+        localStorage.setItem('authToken', response.data.token)
+
+        // Redirect the user to their dashboard
+        router.push('/dashboard')
+
       }
     } catch (err) {
       // If login failed, display error message
