@@ -3,7 +3,17 @@ import LandingPage from './views/LandingPage.vue'
 </script>
 
 <template>
-    <LandingPage></LandingPage>
+  <div>
+    <nav class="bg-gray-800 text-white p-4 flex justify-between">
+      <div class="font-bold text-xl">TeamTaskManager</div>
+      <div class="space-x-4">
+        <router-link to="/" class="hover:underline">Home</router-link>
+        <router-link to="/register" class="hover:underline">Register</router-link>
+        <router-link to="/login" class="hover:underline">Login</router-link>
+      </div>
+    </nav>
+    <router-view />
+  </div>
 </template>
 
 <style scoped>
