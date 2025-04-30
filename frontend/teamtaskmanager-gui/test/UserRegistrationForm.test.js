@@ -29,7 +29,8 @@ describe('<UserRegistrationForm>', () => {
 
         expect(wrapper.html()).toMatchInlineSnapshot();
     });*/
-
+    // Test push with secret updated
+    
     it('should show success message on correct registration', async () => {
 
         axios.post.mockResolvedValue({
