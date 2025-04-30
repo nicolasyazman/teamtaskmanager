@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: frontend  # tells all run steps to work inside ./frontend
+        working-directory: frontend/teamtaskmanager-gui  # tells all run steps to work inside ./frontend
 
     steps:
     - uses: actions/checkout@v4
@@ -32,4 +32,4 @@ jobs:
       if: always()
       uses: davelosert/vitest-coverage-report-action@v2
       with:
-        working-directory: frontend  # this might also be required
+        working-directory: frontend/teamtaskmanager-gui  # this might also be required
