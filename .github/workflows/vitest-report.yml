@@ -7,6 +7,11 @@ jobs:
   test:
     name: Run tests and collect coverage
     runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: frontend/teamtaskmanager-gui  # tells all run steps to work inside ./frontend
+        
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,3 +31,4 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          working-directory: frontend/teamtaskmanager-gui
