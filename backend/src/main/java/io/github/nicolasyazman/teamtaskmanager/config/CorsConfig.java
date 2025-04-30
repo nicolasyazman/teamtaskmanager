@@ -16,7 +16,10 @@ public class CorsConfig {
         CorsConfiguration config = new CorsConfiguration();
         
         config.setAllowCredentials(true); // Allow cookies (optional, depending on your auth system)
-        config.setAllowedOrigins(List.of("http://localhost:5173")); // <-- Frontend URL (adjust if different)
+        config.setAllowedOrigins(List.of(
+        	    "http://localhost:5173",
+        	    "http://localhost:3000"
+        	)); // <-- Frontend URL (adjust if different)
         config.setAllowedHeaders(List.of("*")); // Allow all headers (Authorization, Content-Type, etc.)
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allow HTTP methods
 

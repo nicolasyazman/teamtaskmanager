@@ -16,7 +16,7 @@ import io.github.nicolasyazman.teamtaskmanager.entity.User;
 import io.github.nicolasyazman.teamtaskmanager.service.UserService;
 
 @RestController
-@RequestMapping(path = "user")
+@RequestMapping(path = "/user")
 public class UserController {
 
 	private UserService userService;

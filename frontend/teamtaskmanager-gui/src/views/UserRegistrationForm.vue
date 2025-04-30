@@ -49,7 +49,7 @@
     errorMessage.value = ''
   
     try {
-      await axios.post('http://localhost:8080/api/user', user.value)
+      await axios.post('/api/user', user.value)
       successMessage.value = 'User created successfully!'
       user.value = { username: '', email: '', password: '' } // reset form
     } catch (err) {

@@ -1,5 +1,3 @@
-CREATE DATABASE TTM;
-
 CREATE TABLE USERS (
 	ID integer primary key not null AUTO_INCREMENT,
 	USERNAME varchar(255),

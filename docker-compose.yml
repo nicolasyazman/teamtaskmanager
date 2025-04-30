@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.7
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: TTM
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./backend/db/init:/docker-entrypoint-initdb.d
+    networks:
+      - teamtaskmanager-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://db:3306/TTM
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
+    networks:
+      - teamtaskmanager-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"] # Adjust this endpoint based on your backend's health check URL
+      interval: 10s
+      retries: 5
+      timeout: 5s
+
+  frontend:
+    build:
+      context: ./frontend/teamtaskmanager-gui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+       backend:
+          condition: service_healthy
+    networks:
+      - teamtaskmanager-net
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - teamtaskmanager-net
+    
+networks:
+  teamtaskmanager-net:
+    driver: bridge

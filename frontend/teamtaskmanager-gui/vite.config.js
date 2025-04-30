@@ -32,4 +32,9 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    proxy: {
+      '/api': 'http://localhost:8080', // or your backend's real address
+    },
+  },
 })

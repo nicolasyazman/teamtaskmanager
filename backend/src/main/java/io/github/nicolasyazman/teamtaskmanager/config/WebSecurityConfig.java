@@ -24,10 +24,11 @@ public class WebSecurityConfig {
             .cors(cors -> {})
             .sessionManagement(session -> session.sessionCreationPolicy(STATELESS)) // No session (pure REST)
             .authorizeHttpRequests(auth -> auth
+            	.requestMatchers("/api/health").permitAll()
             	.requestMatchers(HttpMethod.POST, "/user").permitAll() // Allows to create users (POST)
             	.requestMatchers(HttpMethod.GET, "/user/**").hasRole("ADMIN") // But not to list created users
-                .requestMatchers("user/{id}").hasRole("ADMIN")
-                .requestMatchers("auth/login").permitAll() 
+                .requestMatchers("/user/{id}").hasRole("ADMIN")
+                .requestMatchers("/auth/login").permitAll() 
                 .anyRequest().authenticated()               // Other endpoints need authentication
             );
 
