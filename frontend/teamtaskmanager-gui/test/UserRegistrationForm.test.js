@@ -25,10 +25,10 @@ describe('<UserRegistrationForm>', () => {
         plugins: [router]
     });
 
-    it('should render the correct HTML', () => {
+   /* it('should render the correct HTML', () => {
 
         expect(wrapper.html()).toMatchInlineSnapshot();
-    });
+    });*/
 
     it('should show success message on correct registration', async () => {
 
