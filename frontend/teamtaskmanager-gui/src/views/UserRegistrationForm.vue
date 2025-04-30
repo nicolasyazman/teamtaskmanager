@@ -5,17 +5,17 @@
       <form @submit.prevent="submitForm" class="space-y-4">
         <div>
           <label class="block mb-1">Username</label>
-          <input v-model="user.username" type="text" required class="w-full border rounded px-3 py-2" />
+          <input v-model="user.username" type="text" id="registrationform-username" required class="w-full border rounded px-3 py-2" />
         </div>
   
         <div>
           <label class="block mb-1">Email</label>
-          <input v-model="user.email" type="email" required class="w-full border rounded px-3 py-2" />
+          <input v-model="user.email" type="email" id="registrationform-email" required class="w-full border rounded px-3 py-2" />
         </div>
   
         <div>
           <label class="block mb-1">Password</label>
-          <input v-model="user.password" type="password" required class="w-full border rounded px-3 py-2" />
+          <input v-model="user.password" type="password"  id="registrationform-password" required class="w-full border rounded px-3 py-2" />
         </div>
   
         <button
@@ -26,8 +26,8 @@
         </button>
       </form>
   
-      <p v-if="successMessage" class="mt-4 text-green-600">{{ successMessage }}</p>
-      <p v-if="errorMessage" class="mt-4 text-red-600">{{ errorMessage }}</p>
+      <p v-if="successMessage" id="successmessage" class="mt-4 text-green-600">{{ successMessage }}</p>
+      <p v-if="errorMessage" id="errormessage" class="mt-4 text-red-600">{{ errorMessage }}</p>
     </div>
   </template>
   

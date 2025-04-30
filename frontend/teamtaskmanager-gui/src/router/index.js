@@ -4,7 +4,7 @@ import UserRegistrationForm from '../views/UserRegistrationForm.vue'
 import LoginPage from '../views/LoginPage.vue'
 import Dashboard from '../views/Dashboard.vue'
 
-const routes = [
+export const routes = [
     { path: '/', component: LandingPage },
     { path: '/register', component: UserRegistrationForm },
     { path: '/login', component: LoginPage },
