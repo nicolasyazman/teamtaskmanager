@@ -4,7 +4,7 @@ I - Database relational model
 
 This is a first version of the relational model. It might change as we add features.
 
-![Database Relational Model](./pictures/database_relationship_model_taskmanager.png)
+![Database Relational Model](https://raw.githubusercontent.com/nicolasyazman/teamtaskmanager/main/backend/pictures/database_relational_model_taskmanager.png)
 
 Explanation:
 
@@ -14,3 +14,4 @@ Explanation:
 **Task_labels**: Reusable labels (for example: "urgent") per project.
 **Task_assignments**: Defines which task has been assigned to which user.
 **Task_label_mapping**: Attributes a reusable label (for example: "urgent") to a task.
+
