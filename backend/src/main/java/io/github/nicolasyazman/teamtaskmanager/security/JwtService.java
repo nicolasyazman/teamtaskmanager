@@ -31,19 +31,30 @@ public class JwtService {
     }
 
     public boolean isTokenValid(String token, String email) {
+        if (isTokenExpired(token)) {
+        	return false;
+        }
         final String username = extractUsername(token);
-        return username.equals(email) && !isTokenExpired(token);
+        
+        return username.equals(email);
     }
 
-    private boolean isTokenExpired(String token) {
-        return extractAllClaims(token).getExpiration().before(new Date());
+    public boolean isTokenExpired(String token) {
+    	try {
+            extractAllClaims(token).getExpiration().before(new Date());
+    		return false;
+    	} catch(ExpiredJwtException exception) {
+    		return true;
+    	}
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
+        	return Jwts.parserBuilder()
+        
                    .setSigningKey(getSigningKey())
                    .build()
                    .parseClaimsJws(token)
                    .getBody();
+            	
     }
 }

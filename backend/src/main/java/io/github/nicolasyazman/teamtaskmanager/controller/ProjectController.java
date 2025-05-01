@@ -15,10 +15,10 @@ public class ProjectController {
 	private ProjectService projectService;
 	
 	public ProjectController(ProjectService projectService) {
-		
+		this.projectService = projectService;
 	}
 	
-	@PostMapping(path = "")
+	@PostMapping()
 	public void createProject() {
 		
 	}

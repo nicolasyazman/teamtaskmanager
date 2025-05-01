@@ -61,6 +61,19 @@ public class ProjectServiceTest {
 		assert(projects == null);
 	}
 	
+	@Test
+	void shouldNotFindAProjectIfTheUserDoesNotExist() {
+		// Arrange
+		int invalidUserId = -1;
+		User user = new User();
+		user.setId(invalidUserId);
+		
+		// Act
+		when(this.projectRepository.findByOwnerId(invalidUserId)).thenReturn(null);
+		List<Project> projects = this.projectService.findProjectsOfUser(user);
+		// Assert
+		assert(projects == null);
+	}
 	
 	
 	
