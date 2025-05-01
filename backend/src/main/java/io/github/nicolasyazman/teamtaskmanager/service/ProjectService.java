@@ -1,0 +1,28 @@
+package io.github.nicolasyazman.teamtaskmanager.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import io.github.nicolasyazman.teamtaskmanager.entity.Project;
+import io.github.nicolasyazman.teamtaskmanager.entity.User;
+import io.github.nicolasyazman.teamtaskmanager.repository.ProjectRepository;
+
+@Service
+public class ProjectService {
+
+	private ProjectRepository projectRepository;
+	
+	public ProjectService(ProjectRepository projectRepository) {
+		this.projectRepository = projectRepository;
+	}
+	
+	public List<Project> findProjectsByUserId(int userId) {
+		return this.projectRepository.findByOwnerId(userId);
+	}
+	
+	public List<Project> findProjectsOfUser(User user) {
+		return this.findProjectsByUserId(user.getId());
+	}
+	
+}

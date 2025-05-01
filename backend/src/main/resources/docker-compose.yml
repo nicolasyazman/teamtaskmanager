@@ -7,10 +7,15 @@ services:
     restart: always
     environment:
       MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: TTM
     ports:
       - 3307:3306
+    volumes:
+      - ../../../db/init:/docker-entrypoint-initdb.d
+
   adminer:
     image: adminer
     restart: always
     ports:
       - 8081:8080
+
