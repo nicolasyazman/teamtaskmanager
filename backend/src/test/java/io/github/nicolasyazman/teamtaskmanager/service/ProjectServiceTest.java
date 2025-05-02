@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,6 +76,33 @@ public class ProjectServiceTest {
 		assert(projects == null);
 	}
 	
+	@Test
+	void findProjectByProjectId_shouldReturnProjectWhenProjectExists() {
+		// Arrange
+		int projectId = 1;
+		Project project = new Project();
+		project.setId(projectId);
+		
+		Optional<Project> optionalProject = Optional.of(project);
+		// Act
+		when(this.projectRepository.findById(projectId)).thenReturn(optionalProject);
+		
+		// Assert
+		assert(this.projectService.findProjectById(projectId) == optionalProject.get());
+	}
+	
+	@Test
+	void findProjectByProjectId_shouldReturnNullWhenProjectDoesNotExist() {
+		// Arrange
+		int projectId = -1;
+		
+		Optional<Project> optionalNull = Optional.ofNullable(null);
+		// Act
+		when(this.projectRepository.findById(projectId)).thenReturn(optionalNull);
+		
+		// Assert
+		assert(this.projectService.findProjectById(projectId) == null);
+	}
 	
 	
 }

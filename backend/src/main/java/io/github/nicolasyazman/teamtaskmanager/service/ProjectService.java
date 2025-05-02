@@ -1,6 +1,7 @@
 package io.github.nicolasyazman.teamtaskmanager.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,15 @@ public class ProjectService {
 	
 	public List<Project> findProjectsOfUser(User user) {
 		return this.findProjectsByUserId(user.getId());
+	}
+	
+	public Project findProjectById(int projectId) {
+		Optional<Project> projectOrNull = this.projectRepository.findById(projectId);
+		
+		if (projectOrNull.isPresent()) {
+			return projectOrNull.get();
+		}
+		return null;
 	}
 	
 }

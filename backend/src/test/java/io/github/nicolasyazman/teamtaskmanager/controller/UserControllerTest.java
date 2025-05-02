@@ -31,8 +31,7 @@ public class UserControllerTest {
     private UserService userService;
 
     private ObjectMapper mapper = new ObjectMapper();
-
-    
+  
     @Test
     void shouldCreateUser() throws Exception {
     	// Arrange
