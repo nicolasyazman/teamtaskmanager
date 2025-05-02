@@ -18,7 +18,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -66,4 +68,31 @@ public class ProjectControllerTest {
 				.andExpect(jsonPath("$.name").value(projectName));
 	}
 	
+	@Test
+	void shouldGetAListProjectWhenUsingAGetRequestWithASpecificOwnerId() throws Exception {
+		Project project1 = new Project();
+		Project project2 = new Project();
+	
+		int ownerId = 42;
+		
+		project1.setName("Vegetable Wars");
+		project1.setId(1);
+		project1.setDescription("A multiplayer game where you play a vegetable in a war to be sovereign of the vegetable kingdom.");
+		project1.setOwnerId(ownerId);
+		
+		project2.setName("We are legion");
+		project2.setId(2);
+		project2.setDescription("A website helping learners of all ages master cybersecurity and being more aware of cyberthreats.");
+		project2.setOwnerId(ownerId);
+		
+		List<Project> projects = new ArrayList<Project>();
+		projects.add(project1);
+		projects.add(project2);
+		
+		when(this.projectService.findProjectsByUserId(ownerId)).thenReturn(projects);
+		
+		mockMvc.perform(get("/project/ownerid/42"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.length()").value(2));
+	}
 }

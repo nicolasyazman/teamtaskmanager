@@ -30,22 +30,20 @@ public class JwtService {
         return extractAllClaims(token).getSubject();
     }
 
-    public boolean isTokenValid(String token, String email) {
-        if (isTokenExpired(token)) {
-        	return false;
+    public boolean isTokenValid(String token) {
+        try {
+            return !isTokenExpired(token);
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
         }
-        final String username = extractUsername(token);
-        
-        return username.equals(email);
     }
 
     public boolean isTokenExpired(String token) {
-    	try {
-            extractAllClaims(token).getExpiration().before(new Date());
-    		return false;
-    	} catch(ExpiredJwtException exception) {
-    		return true;
-    	}
+        try {
+            return extractAllClaims(token).getExpiration().before(new Date());
+        } catch (ExpiredJwtException exception) {
+            return true;
+        }
     }
 
     private Claims extractAllClaims(String token) {

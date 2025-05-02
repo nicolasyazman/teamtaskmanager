@@ -37,7 +37,7 @@ public class JwtServiceTest {
         String email = "test@example.com";
         String token = jwtService.generateToken(email);
 
-        boolean isValid = jwtService.isTokenValid(token, email);
+        boolean isValid = jwtService.isTokenValid(token);
 
         assertThat(isValid).isTrue();
     }
@@ -46,7 +46,7 @@ public class JwtServiceTest {
     void isTokenValid_shouldReturnFalseForInvalidEmail() {
         String token = jwtService.generateToken("test@example.com");
 
-        boolean isValid = jwtService.isTokenValid(token, "wrong@example.com");
+        boolean isValid = jwtService.isTokenValid(token);
 
         assertThat(isValid).isFalse();
     }
@@ -84,7 +84,7 @@ public class JwtServiceTest {
             .compact();
 
         // Act
-        assertThat(jwtService.isTokenValid(expiredToken, email)).isFalse();
+        assertThat(jwtService.isTokenValid(expiredToken)).isFalse();
 
     }
 }

@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
-	 List<Project> findByOwnerId(int ownerId);
+	List<Project> findByOwnerId(int ownerId);
 }

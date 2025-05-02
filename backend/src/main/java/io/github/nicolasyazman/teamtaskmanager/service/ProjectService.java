@@ -9,6 +9,7 @@ import io.github.nicolasyazman.teamtaskmanager.entity.Project;
 import io.github.nicolasyazman.teamtaskmanager.entity.User;
 import io.github.nicolasyazman.teamtaskmanager.repository.ProjectRepository;
 
+
 @Service
 public class ProjectService {
 
@@ -35,4 +36,12 @@ public class ProjectService {
 		return null;
 	}
 	
+	 /**
+	 * Adds a project to the database. Returns the created Project for further operations.
+	 * @param project The new project we want to add to the database.
+	 * @return The project saved to the database
+	 */
+	public Project create(Project project) {
+		return this.projectRepository.save(project);
+	}
 }

@@ -104,5 +104,17 @@ public class ProjectServiceTest {
 		assert(this.projectService.findProjectById(projectId) == null);
 	}
 	
+	@Test
+	void create_shouldAddTheProjectToTheDatabase() {
+		// Arrange
+		Project project = new Project();
+		
+		// Act
+		when(this.projectRepository.save(project)).thenReturn(project);
+		Project p = this.projectService.create(project);
+		
+		// Assert
+		assert(p == project);
+	}
 	
 }

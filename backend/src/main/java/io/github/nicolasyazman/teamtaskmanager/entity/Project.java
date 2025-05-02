@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "projects")
+@Table(name = "PROJECTS")
 public class Project {
     
     @Id
@@ -21,12 +21,14 @@ public class Project {
 
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "OWNER_ID", nullable = false)
     private int ownerId;
 
+    @Column(name = "CREATED_AT")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @Column(name = "UPDATED_AT")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
@@ -34,8 +36,9 @@ public class Project {
     	
     }
     
-    public Project(String name, String description, int ownerId) {
-    	
+    public Project(String name, String description) {
+    	this.name = name;
+    	this.description = description;
     }
     
     
