@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.github.nicolasyazman.teamtaskmanager.config.WebSecurityConfig;
 import io.github.nicolasyazman.teamtaskmanager.dto.LoginRequest;
+import io.github.nicolasyazman.teamtaskmanager.security.JwtAuthFilter;
 import io.github.nicolasyazman.teamtaskmanager.security.JwtService;
 import io.github.nicolasyazman.teamtaskmanager.service.AuthService;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,9 @@ class AuthControllerTest {
 
     @MockBean
     private JwtService jwtService;
+    
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
 
     @Autowired
     private ObjectMapper objectMapper;

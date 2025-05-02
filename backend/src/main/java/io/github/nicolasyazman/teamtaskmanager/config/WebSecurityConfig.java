@@ -42,6 +42,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/{id}").hasRole("ADMIN")
                 .requestMatchers("/auth/login").permitAll()
                 .requestMatchers("/project/mine").permitAll()
+                .requestMatchers("/tasks/**").permitAll()
+                .requestMatchers("/tasks").permitAll()
                 .anyRequest().authenticated()               // Other endpoints need authentication
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

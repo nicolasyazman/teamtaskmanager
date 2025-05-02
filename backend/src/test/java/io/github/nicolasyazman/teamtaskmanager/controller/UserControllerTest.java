@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.github.nicolasyazman.teamtaskmanager.config.WebSecurityConfig;
 import io.github.nicolasyazman.teamtaskmanager.entity.User;
+import io.github.nicolasyazman.teamtaskmanager.security.JwtAuthFilter;
 import io.github.nicolasyazman.teamtaskmanager.service.UserService;
 
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,10 @@ public class UserControllerTest {
 
     private ObjectMapper mapper = new ObjectMapper();
   
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
+    
+ 
     @Test
     void shouldCreateUser() throws Exception {
     	// Arrange

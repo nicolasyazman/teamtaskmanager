@@ -6,13 +6,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.github.nicolasyazman.teamtaskmanager.config.WebSecurityConfig;
 import io.github.nicolasyazman.teamtaskmanager.entity.Project;
+import io.github.nicolasyazman.teamtaskmanager.security.JwtAuthFilter;
 import io.github.nicolasyazman.teamtaskmanager.service.ProjectService;
+import io.github.nicolasyazman.teamtaskmanager.service.UserService;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -36,9 +40,19 @@ public class ProjectControllerTest {
 	private ProjectService projectService;
 	
 	private ObjectMapper mapper = new ObjectMapper();
+   
+	@MockBean
+    private JwtAuthFilter jwtAuthFilter;
+	
+	@MockBean
+	private UserService userService;
 	
 	@Test
 	void shouldCreateAProjectWhenUsingAPostRequest() throws Exception {
+		 SecurityContextHolder.getContext().setAuthentication(
+			        new TestingAuthenticationToken("user@example.com", null)
+			    );
+		
 		Project project = new Project();
 		project.setId(1);
 		project.setName("Vegetable Wars");
