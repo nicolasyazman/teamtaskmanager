@@ -22,6 +22,7 @@ public class ProjectServiceTest {
 	private UserRepository userRepository;
 	private UserService userService;
 	private ProjectService projectService;
+	private TaskService taskService;
 	
 	@BeforeEach
 	void setUp() {
@@ -29,7 +30,9 @@ public class ProjectServiceTest {
 		this.projectRepository = mock(ProjectRepository.class);
 		this.userRepository = mock(UserRepository.class);
 		this.userService = mock(UserService.class);
-		this.projectService = new ProjectService(this.projectRepository);
+		this.taskService = mock(TaskService.class);
+		
+		this.projectService = new ProjectService(this.projectRepository, this.taskService);
 	}
 	
 	@Test

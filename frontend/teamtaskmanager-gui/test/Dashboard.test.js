@@ -77,7 +77,7 @@ describe('Dashboard.vue', () => {
   })
 
   it('logs out and clears localStorage', async () => {
-    localStorage.setItem('authToken', 'mock-token')
+    localStorage.setItem('authToken', 'mockToken')
 
     const wrapper = mount(Dashboard, {
       global: {
@@ -85,8 +85,10 @@ describe('Dashboard.vue', () => {
       }
     })
 
-    const logoutBtn = wrapper.get('button')
+    const logoutBtn = wrapper.get('#logout-button')
     await logoutBtn.trigger('click')
+
+    await flushPromises();
 
     expect(localStorage.getItem('authToken')).toBeNull()
   })

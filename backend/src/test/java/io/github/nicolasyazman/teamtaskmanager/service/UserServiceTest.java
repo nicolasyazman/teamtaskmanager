@@ -21,12 +21,13 @@ public class UserServiceTest {
 	private UserService userService;
 	private UserRepository userRepository;
 	private PasswordEncoder passwordEncoder;
-	
+	private ProjectService projectService;
 	@BeforeEach
 	void setUp() {
 		this.userRepository = mock(UserRepository.class);
 		this.passwordEncoder = mock(PasswordEncoder.class);
-		this.userService = new UserService(userRepository, passwordEncoder);
+		this.projectService = mock(ProjectService.class);
+		this.userService = new UserService(userRepository, passwordEncoder, projectService);
 	}
 	
 	@Test

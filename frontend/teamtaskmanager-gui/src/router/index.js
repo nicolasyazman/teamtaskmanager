@@ -3,6 +3,7 @@ import LandingPage from '../views/LandingPage.vue'
 import UserRegistrationForm from '../views/UserRegistrationForm.vue'
 import LoginPage from '../views/LoginPage.vue'
 import Dashboard from '../views/Dashboard.vue'
+import ProjectDetails from '../views/ProjectDetails.vue'
 
 export const routes = [
     { path: '/', component: LandingPage },
@@ -20,6 +21,11 @@ export const routes = [
             }
 
         }
+    },
+    {
+        path: '/project/:id',
+        name: 'ProjectDetails',
+        component: ProjectDetails
     },
 ]
 

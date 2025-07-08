@@ -5,7 +5,6 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     tailwindcss(),
@@ -21,9 +20,10 @@ export default defineConfig({
         functions: 60,
         statements: 60
       },
-      // you can include other reporters, but 'json-summary' is required, json is recommended
+      exclude: ['**/*.?(c|m)[jt]s?(x)'],
+
       reporter: ['text', 'json-summary', 'json'],
-      // If you want a coverage reports even if your tests are failing, include the reportOnFailure option
+      
       reportOnFailure: true,
     }
   },
@@ -33,8 +33,12 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: {
-      '/api': 'http://localhost:8080', // or your backend's real address
-    },
+   proxy: {
+      '/api': {
+        target: 'http://backend:8080',   // or 'http://localhost:8080' for local dev without Docker
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''), // remove /api prefix when forwarding
+      }
+    }
   },
 })

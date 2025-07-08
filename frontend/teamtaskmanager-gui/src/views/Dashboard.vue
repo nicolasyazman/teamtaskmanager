@@ -1,5 +1,5 @@
 <template>
-  <div class="p-10 min-h-screen bg-gray-50">
+  <div class="w-screen h-screen bg-gray-50 overflow-auto p-10">
     <h1 class="text-3xl font-bold mb-4">Welcome to your Dashboard!</h1>
     <p class="mb-6 text-gray-600">This is your private space where you can manage your projects.</p>
 
@@ -22,8 +22,13 @@
         <div
           v-for="project in projects"
           :key="project.id"
-          class="aspect-square bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md p-4 flex items-center justify-center text-center cursor-pointer transition"
-        >
+          class="w-full h-48 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md p-4 flex items-center justify-center text-center cursor-pointer transition"
+          :style="{ backgroundImage: `url(${project.imageUrl || defaultImage})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+          }"
+          @click="openProject(project.id)"
+          >
           <h3 class="text-lg font-semibold text-gray-800 break-words">{{ project.name }}</h3>
         </div>
       </div>
@@ -60,6 +65,7 @@
     <button
       @click="logout"
       class="mt-10 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
+      id="logout-button"
     >
       Logout
     </button>
@@ -76,6 +82,10 @@ const projects = ref([])
 const showModal = ref(false)
 const newProject = ref({ name: '', description: '' })
 
+const images = import.meta.glob('@/assets/images/project-default-bg-imgs/*', { eager: true, import: 'default' })
+const imageList = Object.values(images)
+const defaultImage = imageList[0]
+
 const logout = () => {
   localStorage.removeItem('authToken')
   router.push('/login')
@@ -89,7 +99,7 @@ const fetchProjects = async () => {
   }
 
   try {
-    const response = await axios.get('http://localhost:8080/project/mine', {
+    const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/project/mine`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     projects.value = response.data
@@ -104,7 +114,7 @@ const submitProject = async () => {
   if (!token) return router.push('/login')
 
   try {
-    await axios.post('http://localhost:8080/project', newProject.value, {
+    await axios.post(`${import.meta.env.VITE_API_BASE_URL}/project`, newProject.value, {
       headers: { Authorization: `Bearer ${token}` }
     })
     newProject.value = { name: '', description: '' }
@@ -113,6 +123,10 @@ const submitProject = async () => {
   } catch (error) {
     console.error('Failed to create project:', error)
   }
+}
+
+const openProject = (projectid) => {
+  router.push({ name: 'ProjectDetails', params: { id: projectid } })
 }
 
 onMounted(fetchProjects)

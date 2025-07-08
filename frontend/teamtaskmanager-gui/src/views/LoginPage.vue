@@ -44,7 +44,7 @@
   
     try {
       // Send login request to the Spring Boot backend
-      const response = await axios.post('/api/auth/login', {
+      const response = await axios.post('https://teamtaskmanager-backend-production.up.railway.app/auth/login', {
         email: email.value,
         password: password.value
       })

@@ -23,18 +23,24 @@ public class UserService {
 	 */
 	private UserRepository userRepository;
 
+	private ProjectService projectService;
+	
 	/**
 	 * Constructor of the UserService class.
 	 * @param userRepository The repository that acts as link to the database (is injected by Spring Boot)
 	 * @param passwordEncoder An encoder for the password.
+	 * @param projectService An instance of projectService
 	 */
-	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, ProjectService projectService) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.projectService = projectService;
 	}
 	
 	/**
 	 * Adds a user to the database if it does not already exists there.
+	 * We want, when we add a new user to the database, to also add a new
+	 * project with this user Id
 	 * @param userRaw The user we want to add to the database.
 	 * @return True if the user was created, false if it already exists.
 	 */
@@ -50,7 +56,10 @@ public class UserService {
 			user.setUpdated_at(userRaw.getCreated_at());
 			user.setPassword(passwordEncoder.encode(userRaw.getPassword())); // Encrypting the password
 			user.setUsername(userRaw.getUsername());
-			this.userRepository.save(user);
+			User userAfterSaveRequest = this.userRepository.save(user);
+			
+			int userId = userAfterSaveRequest.getId();
+			this.projectService.createSampleProject(userId);
 			return true;
 		}
 		return false;

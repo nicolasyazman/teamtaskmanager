@@ -32,8 +32,10 @@
   </template>
   
   <script setup>
+  console.log('API URL:', import.meta.env.VITE_API_BASE_URL)
   import { ref } from 'vue'
   import axios from 'axios'
+  import { useRouter } from 'vue-router'
   
   const user = ref({
     username: '',
@@ -43,15 +45,19 @@
   
   const successMessage = ref('')
   const errorMessage = ref('')
-  
+  const router = useRouter()
+
   const submitForm = async () => {
     successMessage.value = ''
     errorMessage.value = ''
   
     try {
-      await axios.post('/api/user', user.value)
+      let result = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/user`, user.value)
       successMessage.value = 'User created successfully!'
       user.value = { username: '', email: '', password: '' } // reset form
+      
+      router.push("/login")
+
     } catch (err) {
       errorMessage.value = 'Error: ' + (err.response?.data?.message || err.message)
     }

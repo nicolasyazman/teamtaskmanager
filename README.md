@@ -12,11 +12,11 @@ docker-compose up --build
 
 2) Launching the app:
 
-Go to http://localhost:3000
+Go to http://localhost:5173
 
 II - Demo
 
-TODO: Gif with the animated website once the projects have been implemented.
+https://teamtaskmanager-frontend-production.up.railway.app/
 
 III - Code quality metrics
 
