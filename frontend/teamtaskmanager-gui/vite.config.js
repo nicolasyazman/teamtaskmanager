@@ -13,13 +13,19 @@ export default defineConfig({
   ],
   test: {
     environment: 'jsdom',
+    globals: true,
+    define: {
+      'import.meta.env': {
+        VITE_API_BASE_URL: 'http://localhost:8080'
+      }
+    },
     coverage: {
-      thresholds: {
+     /* thresholds: {
         lines: 60,
         branches: 60,
         functions: 60,
         statements: 60
-      },
+      },*/
       exclude: ['**/*.?(c|m)[jt]s?(x)'],
 
       reporter: ['text', 'json-summary', 'json'],

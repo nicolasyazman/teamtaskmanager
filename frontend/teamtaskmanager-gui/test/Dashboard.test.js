@@ -5,11 +5,18 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import { createRouter, createWebHistory } from 'vue-router'
 
+Object.defineProperty(import.meta, 'env', {
+  value: { VITE_API_BASE_URL: 'http://localhost:8080' }
+})
+
 const mock = new MockAdapter(axios)
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [{ path: '/login', name: 'Login', component: { template: '<div>Login</div>' } }],
+  routes: [
+    { path: '/login', name: 'Login', component: { template: '<div>Login</div>' } },
+    { path: '/', name: 'Dashboard', component: Dashboard },
+  ],
 })
 
 beforeEach(() => {
@@ -39,6 +46,8 @@ describe('Dashboard.vue', () => {
 
     expect(wrapper.text()).toContain('Test Project 1')
     expect(wrapper.text()).toContain('Test Project 2')
+    //const projects = wrapper.findAll('[data-testid="project-title"]')
+    //expect(projects.map(p => p.text())).toEqual(['Test Project 1', 'Test Project 2'])
   })
 
   it('shows message if no projects exist', async () => {
@@ -65,7 +74,7 @@ describe('Dashboard.vue', () => {
     router.push('/')
     await router.isReady()
 
-    const wrapper = mount(Dashboard, {
+    mount(Dashboard, {
       global: {
         plugins: [router]
       }
@@ -88,7 +97,7 @@ describe('Dashboard.vue', () => {
     const logoutBtn = wrapper.get('#logout-button')
     await logoutBtn.trigger('click')
 
-    await flushPromises();
+    await flushPromises()
 
     expect(localStorage.getItem('authToken')).toBeNull()
   })

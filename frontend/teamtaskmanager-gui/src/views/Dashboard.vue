@@ -29,7 +29,7 @@
           }"
           @click="openProject(project.id)"
           >
-          <h3 class="text-lg font-semibold text-gray-800 break-words">{{ project.name }}</h3>
+          <h3 data-testid="project-title" class="text-lg font-semibold text-gray-800 break-words">{{ project.name }}</h3>
         </div>
       </div>
     </div>
@@ -98,6 +98,27 @@ const fetchProjects = async () => {
     return
   }
 
+  const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/project/mine`
+  console.log('Fetching projects from:', apiUrl)
+
+  try {
+    const response = await axios.get(apiUrl, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    projects.value = response.data
+  } catch (error) {
+    console.error('Failed to fetch projects:', error)
+    if (error.response?.status === 401) logout()
+  }
+}
+/*
+const fetchProjects = async () => {
+  const token = localStorage.getItem('authToken')
+  if (!token) {
+    router.push('/login')
+    return
+  }
+
   try {
     const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/project/mine`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -108,7 +129,7 @@ const fetchProjects = async () => {
     if (error.response?.status === 401) logout()
   }
 }
-
+*/
 const submitProject = async () => {
   const token = localStorage.getItem('authToken')
   if (!token) return router.push('/login')
